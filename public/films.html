@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Watched Films</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="music.js" defer></script>
+<script src="navbar-toggle.js" defer></script>
+<script src="theme.js" defer></script>
+  <style>
+    /* Juste pour que modal fonctionne bien */
+    #film-detail-modal.hidden {
+      display: none;
+    }
+    #film-detail-modal {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      max-width: 400px;
+      z-index: 100;
+    }
+    .reviews-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .review-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .review-section textarea {
+      resize: vertical;
+      min-height: 80px;
+      margin-bottom: 10px;
+    }
+    #films-list li {
+      cursor: pointer;
+      padding: 6px 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    #films-list li:hover {
+      background: #f0f0f0;
+    }
+    button {
+      cursor: pointer;
+    }
+    /* Flower player simplifié */
+    .flower-player-wrapper {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(255 255 255 / 0.9);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #music-toggle.flower-spinner {
+      font-size: 24px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .music-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .controls button {
+      font-size: 18px;
+      background: none;
+      border: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<button id="menu-toggle" class="menu-button">☰</button>
+
+<nav id="mobile-navbar" class="navbar hidden">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="message.html">Quote of the day</a></li>
+    <li><a href="verses.html">Verses</a></li>
+    <li><a href="films.html">Films</a></li>
+    <li><a href="questions.html">Questions for Us</a></li>
+    <li><a href="about.html">About Us</a></li>
+  </ul>
+</nav>
+
+<section id="films-section">
+  <h2>Watched Films 🎬</h2>
+
+  <form id="add-film-form">
+    <div class="form-group">
+      <label for="film-name">Film Name:</label>
+      <input type="text" id="film-name" placeholder="e.g. La La Land" required />
+    </div>
+
+    <div class="form-group">
+      <label for="film-cover-url">Cover Image URL:</label>
+      <input type="url" id="film-cover-url" placeholder="Paste a poster URL (optional)" />
+    </div>
+
+    <div class="form-group">
+      <label for="film-release-date">Release Date:</label>
+      <input type="date" id="film-release-date" required />
+    </div>
+
+   <div class="form-group">
+  <label>Suggested By:</label>
+  <div>
+    <label><input type="radio" name="film-suggested-by" value="Him" required /> Him</label>
+    <label><input type="radio" name="film-suggested-by" value="Her" /> Her</label>
+  </div>
+</div>
+
+    <div class="form-group">
+      <label for="film-watched-date">Date Watched:</label>
+      <input type="date" id="film-watched-date" required />
+    </div>
+    <div class="form-group">
+  <label>Who won?</label>
+  <div>
+    <label><input type="radio" name="film-winner" value="Him" required /> Him</label>
+    <label><input type="radio" name="film-winner" value="Her" /> Her</label>
+  </div>
+</div>
+
+    <button type="submit">Add Film</button>
+  </form>
+
+  <ul id="films-list"></ul>
+
+  <!-- Reset button to clear localStorage (for dev only) -->
+  <button onclick="localStorage.removeItem('films'); location.reload();">🔄 Reset films</button>
+</section>
+
+<!-- Film details modal -->
+<div id="film-detail-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="detail-film-name">
+  <div id="film-detail-content">
+    <button id="close-detail" aria-label="Close details">Close ✖️</button>
+    <h3 id="detail-film-name"></h3>
+    <img id="detail-film-cover" src="" alt="Film Cover" style="width: 100%; max-width: 200px; margin: 10px 0;" />
+    <p><strong>Release Date:</strong> <span id="detail-release-date"></span></p>
+    <p><strong>Watched On:</strong> <span id="detail-watched-date"></span></p>
+    <p><strong>Suggested By:</strong> <span id="detail-suggested-by"></span></p>
+
+    <div class="reviews-container">
+      <div class="review-section" id="my-review-section">
+        <h4>My Review</h4>
+        <label>Mark (0-10): <input type="number" id="my-mark" min="0" max="10" /></label>
+        <textarea id="my-review-text" placeholder="Write your review..."></textarea>
+        <button id="my-review-submit">Submit</button>
+        <pre id="my-review-display" style="white-space: pre-wrap; background:#f9f9f9; padding: 8px; border-radius: 4px; min-height: 60px;"></pre>
+      </div>
+
+      <div class="review-section" id="her-review-section">
+        <h4>Her Review</h4>
+        <label>Mark (0-10): <input type="number" id="her-mark" min="0" max="10" /></label>
+        <textarea id="her-review-text" placeholder="Write her review..."></textarea>
+        <button id="her-review-submit">Submit</button>
+        <pre id="her-review-display" style="white-space: pre-wrap; background:#f9f9f9; padding: 8px; border-radius: 4px; min-height: 60px;"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Flower music player -->
+<div class="flower-player-wrapper">
+  <div id="music-toggle" class="flower-spinner" title="Play/Pause Music">🌸</div>
+  <div class="music-bar">
+    <span id="song-title">End – Dream Protocol</span>
+    <div class="controls">
+      <button id="prev" aria-label="Previous Track">⏮️</button>
+      <button id="play-pause" aria-label="Play/Pause">▶️</button>
+      <button id="next" aria-label="Next Track">⏭️</button>
+    </div>
+  </div>
+</div>
+
+<audio id="bg-music" loop></audio>
+
+<script src="films.js"></script>
+<div id="flower-container"></div>
+
+</body>
+</html>

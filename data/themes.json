@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Sunny",
+    "background": "#fffbe6",
+    "flowerColors": ["🌼", "🌻"]
+  },
+  {
+    "name": "Romantic",
+    "background": "#ffe6f0",
+    "flowerColors": ["🌸", "💮", "🌷"]
+  },
+  {
+    "name": "Melancholy",
+    "background": "#1f1f1f",
+    "flowerColors": ["🥀", "🖤"]
+  }
+]

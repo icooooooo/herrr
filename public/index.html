@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elle</title>
+  <link rel="stylesheet" href="style.css">
+<script src="music.js" defer></script>
+<script src="navbar-toggle.js" defer></script>
+<script src="theme.js" defer></script>
+</head>
+<body>
+
+  <!-- POPUP HUMEUR -->
+  <div id="mood-popup" class="mood-modal">
+    <div class="mood-content">
+      <p>🌤️ Quelle est ton humeur aujourd’hui ?</p>
+      <div class="mood-options">
+        <button data-mood="Hungry">👹 Hungry</button>
+        <button data-mood="A_feeling_ma_endoch_smiya">🩷 A feeling ma endoch smiya</button>
+        <button data-mood="Mad">💔 Mad</button>
+        <button data-mood="Joy">🤩 Joy</button>
+        <button data-mood="Overstimulated">😃 Overstimulated</button>
+        <button data-mood="Blushing">🥰 Blushing</button>
+        <button data-mood="Hyper_excited">🐦‍🔥 Hyper Excited</button>
+        <button data-mood="Angryyy">😡 Angryyy</button>
+        <button data-mood="Sad">👻 Sad</button>
+        <button data-mood="Tired">🙅🏻‍♀ Tired</button>
+        <button data-mood="Sleepy">💤 Sleepy</button>
+        <button data-mood="Love">💕 In Love</button>
+      </div>
+    </div>
+  </div>
+
+<button id="menu-toggle" class="menu-button">☰</button>
+
+<nav id="mobile-navbar" class="navbar hidden">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="message.html">Quote of the day</a></li>
+    <li><a href="verses.html">Verses</a></li>
+    <li><a href="films.html">Films</a></li>
+    <li><a href="questions.html">Questions for Us</a></li>
+    <li><a href="about.html">About Us</a></li>
+  </ul>
+</nav>
+
+  <h1>Welcome to Our Little Space 🌸</h1>
+  <p>This is a place where verses bloom, memories stay safe, films live forever, and love gets written day by day.</p>
+
+  <!-- FLOWER CONTAINER -->
+  <div id="flower-container"></div>
+
+  <!-- MUSIC + SCRIPT -->
+  <div class="flower-player-wrapper">
+    <div id="music-toggle" class="flower-spinner">🌸</div>
+    <div class="music-bar">
+      <span id="song-title">End – Dream Protocol</span>
+      <div class="controls">
+        <button id="prev">⏮️</button>
+        <button id="play-pause">▶️</button>
+        <button id="next">⏭️</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bg-music" loop></audio>
+
+  <!-- PLACE TOUJOURS LE SCRIPT EN DERNIER -->
+  <!-- <script src="script.js"></script> -->
+</body>
+</html>

@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (toggleBtn && navbar) {
     toggleBtn.addEventListener("click", () => {
-      navbar.classList.toggle("hidden");
+      // LA CORRECTION EST ICI :
+      // On utilise 'is-open' pour déclencher l'animation de glissement, pas 'hidden'.
+      navbar.classList.toggle("is-open");
     });
   }
 });

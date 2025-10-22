@@ -806,6 +806,409 @@ h1 {
   background: #e14d97;
 }
 
+.gallery-container {
+    text-align: center;
+    padding: 20px;
+    font-family: sans-serif; /* Use your site's font */
+}
+
+.gallery-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.gallery-container p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.photo-grid {
+    display: grid;
+    gap: 20px; /* Space between items */
+
+    /* Default: 2 columns for mobile phones */
+    grid-template-columns: repeat(2, 1fr); 
+}
+
+/* For tablets and small laptops (screens wider than 768px) */
+
+
+.grid-item {
+    overflow: hidden; /* Hides parts of image that might overflow on hover */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: scale(1.05); /* A nice little zoom effect on hover */
+    cursor: pointer;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This makes sure the images fill the box without stretching */
+    display: block;
+}
+
+.grid-item {
+    position: relative; /* This is crucial for positioning the play icon */
+    display: block; /* Make the <a> tag behave like a block */
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-out;
+    background-color: #eee;
+    aspect-ratio: 1 / 1;
+}
+
+.grid-item:hover {
+    transform: scale(1.04);
+    cursor: pointer;
+}
+
+.upload-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+}
+
+#upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#upload-form label {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+#file-input {
+    background: white;
+    border: 3px dashed #ec4899;
+    border-radius: 12px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+#file-input:hover {
+    border-color: #be185d;
+    background: #fdf2f8;
+    transform: translateY(-2px);
+}
+
+#file-input::file-selector-button {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+#file-input::file-selector-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(236, 72, 153, 0.4);
+    background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+}
+
+#upload-form button[type="submit"] {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+}
+
+#upload-form button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.5);
+    background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+}
+
+#upload-form button[type="submit"]:active {
+    transform: translateY(-1px);
+}
+
+.upload-note {
+    background: rgba(255, 255, 255, 0.95);
+    color: #be185d;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border-left: 4px solid #ec4899;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#upload-status {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+}
+
+#upload-status:not(:empty) {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2d3748;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.photo-grid p {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #718096;
+    font-size: 1.1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .upload-section {
+        padding: 1.5rem;
+        margin: 1rem;
+        border-radius: 15px;
+    }
+    
+    #upload-form label {
+        font-size: 1.1rem;
+    }
+    
+    #file-input {
+        padding: 1.5rem;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
+
+.player-arrow {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-arrow:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.player-arrow.open {
+    transform: rotate(180deg);
+}
+
+.player-arrow.open:hover {
+    transform: rotate(180deg) scale(1.1);
+}
+
+/* Container de la playlist */
+.playlist-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 400px;
+    max-width: 90vw;
+    height: 70vh;
+    max-height: 600px;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.playlist-container.hidden {
+    transform: translateY(100%);
+}
+
+.playlist-container:not(.hidden) {
+    transform: translateY(0);
+}
+
+/* En-tête de la playlist */
+.playlist-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #ff9a9e 0%, #be3a94 100%);
+    color: white;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+}
+
+.playlist-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Liste de la playlist */
+.playlist-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    margin: 0;
+    list-style: none;
+}
+
+/* Item de chanson */
+.playlist-item {
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.playlist-item:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: translateX(5px);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.playlist-item.active {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+    border-color: #667eea;
+    font-weight: 600;
+}
+
+.playlist-item .song-icon {
+    font-size: 20px;
+    min-width: 25px;
+}
+
+.playlist-item.active .song-icon {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.playlist-item .song-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.playlist-item .song-title {
+    display: block;
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playlist-item .song-artist {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Scrollbar personnalisée */
+.playlist-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.playlist-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.playlist-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+}
+
+.playlist-list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Mode sombre */
+body.dark-mode .playlist-container {
+    background: rgba(30, 30, 40, 0.95);
+}
+
+body.dark-mode .playlist-item {
+    background: rgba(102, 126, 234, 0.15);
+}
+
+body.dark-mode .playlist-item .song-title {
+    color: #fff;
+}
+
+body.dark-mode .playlist-item .song-artist {
+    color: #aaa;
+}
+
+@media (min-width: 768px) {
+    .photo-grid {
+        grid-template-columns: repeat(3, 1fr); /* Show 3 columns */
+    }
+}
+
+/* For large desktops (screens wider than 1200px) */
+@media (min-width: 1200px) {
+    .photo-grid {
+        grid-template-columns: repeat(5, 1fr); /* Show 5 columns */
+    }
+}
 
 html {
   scroll-behavior: smooth;

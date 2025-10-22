@@ -16,7 +16,7 @@
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="message.html">Quote of the day</a></li>
-    <li><a href="verses.html">Verses</a></li>
+    <li><a href="gallery.html">Our Gallery</a></li>
     <li><a href="films.html">Films</a></li>
     <li><a href="questions.html">Questions for Us</a></li>
     <li><a href="about.html">About Us</a></li>
@@ -40,18 +40,29 @@
     </div>
   </section>
 <div class="flower-player-wrapper">
-  <div id="music-toggle" class="flower-spinner" title="Play/Pause Music">🌸</div>
-  <div class="music-bar">
-    <span id="song-title">End – Dream Protocol</span>
-    <div class="controls">
-      <button id="prev" aria-label="Previous Track">⏮️</button>
-      <button id="play-pause" aria-label="Play/Pause">▶️</button>
-      <button id="next" aria-label="Next Track">⏭️</button>
+    <!-- La Playlist (cachée par défaut) -->
+    <div id="playlist-container" class="playlist-container hidden">
+        <div class="playlist-header">
+            <h3>🎵 Your Playlist</h3>
+        </div>
+        <ul id="playlist-list" class="playlist-list">
+            <!-- JavaScript va créer la liste des chansons ici -->
+        </ul>
     </div>
-  </div>
+    
+    <!-- Votre barre de musique existante -->
+    <div id="music-toggle" class="flower-spinner">🌸</div>
+    <div class="music-bar">
+        <span id="song-title">Song Title</span>
+        <div class="controls">
+            <button id="prev">⏮️</button>
+            <button id="play-pause">▶️</button>
+            <button id="next">⏭️</button>
+        </div>
+    </div>
 </div>
 
-<audio id="bg-music" loop src="End.mp3"></audio>
+<audio id="bg-music"></audio>
   <script src="questions.js"></script>
 
 <div id="flower-container"></div>

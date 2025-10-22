@@ -1,94 +1,68 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
 
 const app = express();
 const PORT = 3000;
 
-const DATA_PATH = path.join(__dirname, "data", "films.json");
-
-// Middleware
+// --- Middleware ---
 app.use(express.json());
-app.use(express.static("public")); // sert tes fichiers HTML, CSS, JS
+app.use(express.static("public"));
 
-// GET: récupérer tous les films
-app.get("/api/films", (req, res) => {
-  fs.readFile(DATA_PATH, "utf-8", (err, data) => {
-    if (err) {
-      console.error("Erreur lecture JSON:", err);
-      return res.status(500).json({ error: "Unable to read films data." });
-    }
+// --- Folder Paths ---
+const UPLOADS_DIR = path.join(__dirname, 'public/uploads/');
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
-    try {
-      const films = JSON.parse(data);
-      res.json(films);
-    } catch (e) {
-      console.error("Erreur parsing JSON:", e);
-      res.status(500).json({ error: "Invalid JSON format." });
+// --- Multer Configuration: Simple and Clean for Images ---
+const storage = multer.diskStorage({
+    destination: UPLOADS_DIR,
+    filename: function (req, file, cb) {
+        // Create a unique filename: originalname-timestamp.ext
+        cb(null, path.parse(file.originalname).name + '-' + Date.now() + path.extname(file.originalname));
     }
-  });
 });
 
-// POST: ajouter ou mettre à jour un film
-app.post("/api/films", (req, res) => {
-  const newFilm = req.body;
-
-  fs.readFile(DATA_PATH, "utf-8", (err, data) => {
-    if (err) {
-      console.error("Erreur lecture:", err);
-      return res.status(500).json({ error: "Unable to read file." });
-    }
-
-    let films = [];
-    try {
-      films = JSON.parse(data);
-    } catch (e) {
-      console.error("Erreur parsing JSON:", e);
-    }
-
-    // Vérifie si le film existe déjà (par nom)
-    const index = films.findIndex((f) => f.name === newFilm.name);
-
-    if (index !== -1) {
-      films[index] = newFilm; // mise à jour
+// A filter to ensure only images are uploaded
+const imageFileFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
     } else {
-      films.unshift(newFilm); // ajout
+        cb(new Error('Only image files are allowed!'), false);
     }
+};
 
-    fs.writeFile(DATA_PATH, JSON.stringify(films, null, 2), (err) => {
-      if (err) {
-        console.error("Erreur écriture JSON:", err);
-        return res.status(500).json({ error: "Failed to save film." });
-      }
+const upload = multer({ storage: storage, fileFilter: imageFileFilter }).single('myImage');
 
-      res.json({ success: true });
+// --- A VERY SIMPLE UPLOAD ROUTE ---
+app.post('/upload', (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            console.error("Upload Error:", err);
+            return res.status(400).json({ msg: err.message }); // Send a user-friendly error
+        }
+        if (!req.file) {
+            return res.status(400).json({ msg: 'No file was uploaded.' });
+        }
+        // Success!
+        res.status(200).json({
+            msg: 'Memory uploaded successfully!',
+            file: `uploads/${req.file.filename}`
+        });
     });
-  });
 });
-const ANSWERS_PATH = path.join(__dirname, "data", "answers.json");
 
-app.post("/api/answers", (req, res) => {
-  const newAnswer = req.body;
-
-  fs.readFile(ANSWERS_PATH, "utf-8", (err, data) => {
-    let answers = [];
-    if (!err) {
-      try {
-        answers = JSON.parse(data);
-      } catch (e) {
-        console.error("Invalid JSON");
-      }
-    }
-
-    answers.unshift(newAnswer);
-
-    fs.writeFile(ANSWERS_PATH, JSON.stringify(answers, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: "Write failed." });
-      res.json({ success: true });
+// GET Route for the gallery
+app.get('/api/images', (req, res) => {
+    fs.readdir(UPLOADS_DIR, (err, files) => {
+        if (err) return res.status(500).send('Server error.');
+        // Filter out non-image files just in case, and sort to show newest first
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif|heic|heif)$/i.test(file));
+        res.json(imageFiles.sort().reverse());
     });
-  });
 });
-// Démarrer le serveur
+
+// --- Start the server ---
 app.listen(PORT, () => {
   console.log(`✅ Server running at: http://localhost:${PORT}`);
 });

@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "heic-convert": "^2.1.0",
+    "heic-to-jpg": "^2.1.1",
+    "heic2any": "^0.0.4",
+    "multer": "^2.0.2"
   }
 }

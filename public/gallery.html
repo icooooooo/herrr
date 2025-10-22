@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Gallery</title>
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- lightGallery Styles (Video CSS is removed) -->
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lightgallery.min.css" />
+
+  <!-- Your other scripts -->
+  <script src="music.js" defer></script>
+  <script src="navbar-toggle.js" defer></script>
+  <script src="theme.js" defer></script>
+</head>
+<body>
+  <!-- Your existing navbar -->
+  <button id="menu-toggle" class="menu-button">☰</button>
+  <nav id="mobile-navbar" class="navbar hidden">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="message.html">Quote of the day</a></li>
+      <li><a href="gallery.html">Our Gallery</a></li>
+      <li><a href="films.html">Films</a></li>
+      <li><a href="questions.html">Questions for Us</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <!-- ... other links ... -->
+    </ul>
+  </nav>
+
+  <div class="gallery-container">
+    <h1>Our Memories ✨</h1>
+    <p>Every picture tells a part of our story.</p>
+
+    <div class="upload-section">
+    <form id="upload-form">
+        <label for="file-input">Add a new memory (photo):</label>
+        <input type="file" name="myImage" id="file-input" accept="image/*,.heic,.heif" multiple required>
+        <button type="submit">Upload</button>
+    </form>
+    <!-- ADD THIS HELPFUL NOTE -->
+    <p class="upload-note">Note: Live Photos may not be supported. Please princess upload standard photos.</p>
+    
+    <div id="upload-status"></div>
+</div>
+
+    <div class="photo-grid" id="photo-grid">
+        <p>Loading our memories...</p>
+    </div>
+  </div>
+
+  <!-- Your music player and flower container -->
+  <div class="flower-player-wrapper">
+    <!-- La Playlist (cachée par défaut) -->
+    <div id="playlist-container" class="playlist-container hidden">
+        <div class="playlist-header">
+            <h3>🎵 Your Playlist</h3>
+        </div>
+        <ul id="playlist-list" class="playlist-list">
+            <!-- JavaScript va créer la liste des chansons ici -->
+        </ul>
+    </div>
+    
+    <!-- Votre barre de musique existante -->
+    <div id="music-toggle" class="flower-spinner">🌸</div>
+    <div class="music-bar">
+        <span id="song-title">Song Title</span>
+        <div class="controls">
+            <button id="prev">⏮️</button>
+            <button id="play-pause">▶️</button>
+            <button id="next">⏭️</button>
+        </div>
+    </div>
+</div>
+
+<audio id="bg-music"></audio>
+
+  <!-- lightGallery Script (Video plugin is removed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/lightgallery.min.js"></script>
+  
+  <!-- Your gallery script -->
+  <script src="/js/gallery.js" defer></script>
+</body>
+</html>
